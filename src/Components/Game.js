@@ -1,11 +1,8 @@
+import React, { useState } from 'react'
 import Line from "./Line";
 import "./Game.css";
-import { useState } from "react";
 const Game = (props) => {
   const [codeValue, setCodeValue] = useState([]);
-  // const [isStarted,] = setState()
-  //   const codeValue = new Array(4);
-  //console.log(codeValue.length);
 
   const startGameHandler = (codeValue) => {
     console.log("clicked!");
@@ -24,10 +21,10 @@ const Game = (props) => {
         <h1>Find The Secret Code</h1>
       </div>
       <div className="game-bar">
-        <Line />
+        <Line secretCode={codeValue} />
       </div>
       <div className="side-bar">
-        <button onClick={startGameHandler}>Start</button>
+        <button onClick={() => { startGameHandler(codeValue) }}>Start</button>
       </div>
     </div>
   );

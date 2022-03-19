@@ -1,21 +1,28 @@
 import { useState } from "react";
 import "./Line.css";
 import Dot from "./Dot.js";
+import Input from "./Input/Input.js"
 const Line = (props) => {
-  const [enteredValue, setEnteredValue] = useState("");
+
+
+  const checkCodeValidity = () => {
+  }
+  console.log(props)
+
 
   return (
-    <section className="">
-      <input type="number" id="fillers" value={enteredValue}></input>
-      <input type="number" id="fillers"></input>
-      <input type="number" id="fillers"></input>
-      <input type="number" id="fillers"></input>
-      <button> Check</button>
+    < section className="" >
+
+      <Input secretCode={props.secretCode} />
+      <Input />
+      <Input />
+      <Input />
+      <button onClick={checkCodeValidity}> Check </button>
       <Dot />
       <Dot />
       <Dot />
       <Dot />
-    </section>
+    </section >
   );
 };
 export default Line;
