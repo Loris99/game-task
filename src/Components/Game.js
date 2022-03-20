@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import Line from "./Line";
 import "./Game.css";
+const SIZE = 4;
+
 const Game = (props) => {
   const [codeValue, setCodeValue] = useState([]);
 
   const startGameHandler = (codeValue) => {
     console.log("clicked!");
     setCodeValue(
-      (codeValue = Array(4)
+      (codeValue = Array(SIZE)
         .fill(0)
         .map((num) => (num = Math.floor(Math.random() * 10))))
     );
@@ -24,7 +26,13 @@ const Game = (props) => {
         <Line secretCode={codeValue} />
       </div>
       <div className="side-bar">
-        <button onClick={() => { startGameHandler(codeValue) }}>Start</button>
+        <button
+          onClick={() => {
+            startGameHandler(codeValue);
+          }}
+        >
+          Start
+        </button>
       </div>
     </div>
   );

@@ -5,6 +5,9 @@
 }
 .error-text {
   color: #b40e0e;
-   border-color: 1px solid #b40e0e;
-   background-color: #fddddd;
+  border-color: 1px solid #b40e0e;
+  background-color: #fddddd;
+}
+.box {
+  display: inline-block;
 }
