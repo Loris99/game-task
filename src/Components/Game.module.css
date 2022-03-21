@@ -6,7 +6,7 @@
   grid-gap: 0px;
   border: 3px solid black;
 }
-.top-bar {
+.top_bar {
   grid-column: 1/-1;
   border-bottom: 3px solid black;
   /* border-right: none; */
@@ -16,8 +16,11 @@
   list-style-type: none;
   text-align: center;
 }
-.side-bar {
+.side_bar {
   grid-row: -1/0;
 
   border-left: 3px solid black;
+}
+.line_display {
+  display: inline-block;
 }

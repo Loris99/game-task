@@ -1,0 +1,29 @@
+.dot {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin: 5px;
+  margin-top: 10px;
+  /* display: inline-block; */
+}
+
+.dot .contains {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin: 5px;
+  margin-top: 10px;
+  background-color: white;
+  border: 2px solid black;
+  display: inline-block;
+}
+.dot .right {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin: 5px;
+  margin-top: 10px;
+  background-color: rgb(48, 134, 231);
+  border: 2px solid rgb(48, 134, 231);
+  display: inline-block;
+}

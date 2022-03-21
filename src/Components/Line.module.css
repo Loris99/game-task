@@ -3,11 +3,11 @@
   height: 30px;
   margin: 10px;
 }
-.error-text {
+.error_text {
   color: #b40e0e;
   border-color: 1px solid #b40e0e;
   background-color: #fddddd;
 }
-.box {
+.display {
   display: inline-block;
 }

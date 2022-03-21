@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Line from "./Line";
-import "./Game.css";
+import styles from "./Game.module.css";
 const SIZE = 4;
 
 const Game = (props) => {
@@ -15,17 +15,16 @@ const Game = (props) => {
     );
     console.log("secret code" + " " + codeValue);
   };
-  //   console.log(codeValue.length);
 
   return (
-    <div className="container">
-      <div className="top-bar">
+    <div className={styles.container}>
+      <div className={styles.top_bar}>
         <h1>Find The Secret Code</h1>
       </div>
-      <div className="game-bar">
-        <Line secretCode={codeValue} />
+      <div className={styles.game_bar}>
+        <Line className={styles.line_display} secretCode={codeValue} />
       </div>
-      <div className="side-bar">
+      <div className={styles.side_bar}>
         <button
           onClick={() => {
             startGameHandler(codeValue);

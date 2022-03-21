@@ -1,47 +1,89 @@
-import { useEffect, useState } from "react";
-import "./Line.css";
+import { useState } from "react";
+import styles from "./Line.module.css";
 import Dot from "./Dot.js";
+// import "./Dot.css";
 const SIZE = 4;
+var LETTERS = /^[A-Za-z]+$/;
 const Line = (props) => {
-  const checkCodeValidity = () => {};
   console.log(props); //secret code
-
-  // const [enteredValue, setEnteredValue] = useState([0, 0, 0, 0]);
-  const [enteredValue, setEnteredValue] = useState(["", "", "", ""]);
+  const secretCode = props.secretCode;
+  const [enteredCode, setEnteredCode] = useState(["", "", "", ""]);
+  const [dots, setDots] = useState();
   const valueInputChangeHandler = (digitValue, index) => {
-    const clonedValues = [...enteredValue];
+    if (LETTERS.test(digitValue)) {
+      console.log(LETTERS.test(digitValue));
+      return;
+    }
+    const clonedValues = [...enteredCode];
     clonedValues[index] = digitValue;
-
-    setEnteredValue(clonedValues);
-    //  setEnteredValue(prev)
+    setEnteredCode(clonedValues);
   };
-  console.log("enetered array: " + enteredValue.toString());
+  const [isContains, setIsContains] = useState(false);
+  console.log("secret array: " + secretCode);
+  console.log("enetered array: " + enteredCode);
+  // let containso = false;
+  // const [dotClassName, setDotClassName] = useState({styles.Dot);
+
+  const checkCodeValidity = () => {
+    // let i = 0;
+    const secretString = JSON.stringify(secretCode);
+    for (let i = 0; i < secretCode.length; i++) {
+      const digit = secretCode[i].toString();
+      const digitq = enteredCode[i].toString();
+      // const enteredDigit = enteredCode.index;
+      // console.log("yyy " + enteredCode.index.toString());
+      if (enteredCode.findIndex((val) => val === digit) !== -1) {
+        console.log(
+          " entered contains this vlaue " +
+            digit +
+            " :" +
+            enteredCode.findIndex((val) => val === digit)
+        );
+        setIsContains(true);
+        // console.log(
+        //   " entered contains this vlaue in reverse " +
+        //     digitq +
+        //     " :" +
+        //     secretString.findIndex((val) => val === digitq)
+        // );
+
+        // if (
+        //   enteredCode.findIndex((val) => val === digit) ===
+        //   secretString.findIndex((val) => val === digitq)
+        // ) {
+        //   console.log(
+        //     "the index: " + enteredCode.findIndex((val) => val === digit)
+        //   );
+        // }
+        // setDotClassName({styles['contains']});
+      } else {
+        console.log("try again ");
+      }
+    }
+  };
 
   return (
     <section>
-      <div className="box">
-        {enteredValue.map((digitValue, index) => (
+      <div className={styles.display}>
+        {enteredCode.map((digitValue, index) => (
           <input
             key={index}
             type="text"
             maxLength="1"
-            pattern="[0-9]*"
-            // oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-            id="fillers"
+            id={styles.fillers}
             onChange={(event) => {
               valueInputChangeHandler(event.target.value, index);
             }}
             value={digitValue}
-            // min="00"
-            // max="09"
           />
         ))}
       </div>
       <button onClick={checkCodeValidity}> Check </button>
-      <Dot />
-      <Dot />
-      <Dot />
-      <Dot />
+      <div className={styles.display}>
+        {dots.map((counts) => {
+          <Dot className={` ${!isContains && styles.contains}`} />;
+        })}
+      </div>
     </section>
   );
 };
