@@ -1,6 +1,6 @@
-import styles from "./Dot.module.css";
+import classes from "./Dot.module.css";
 
 const Dot = (props) => {
-  return <span className={`${styles.className} ${props.className}`}></span>;
+  return <span className={`${classes.className}`}></span>;
 };
 export default Dot;

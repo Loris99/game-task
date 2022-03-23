@@ -7,7 +7,7 @@
   /* display: inline-block; */
 }
 
-.dot .contains {
+.contains {
   height: 30px;
   width: 30px;
   border-radius: 50%;
@@ -17,7 +17,7 @@
   border: 2px solid black;
   display: inline-block;
 }
-.dot .right {
+.right {
   height: 30px;
   width: 30px;
   border-radius: 50%;

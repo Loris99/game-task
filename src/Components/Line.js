@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./Line.module.css";
 import Dot from "./Dot.js";
+import classes from "./Dot.module.css";
+
 // import "./Dot.css";
 const SIZE = 4;
 var LETTERS = /^[A-Za-z]+$/;
@@ -8,7 +10,10 @@ const Line = (props) => {
   console.log(props); //secret code
   const secretCode = props.secretCode;
   const [enteredCode, setEnteredCode] = useState(["", "", "", ""]);
-  const [dots, setDots] = useState();
+  const [circles, setCircles] = useState([]);
+  // const [containsCounter, setContainsCounter] = useState(0);
+  // const [sameSpotCounter, setSameSpotCounter] = useState();
+
   const valueInputChangeHandler = (digitValue, index) => {
     if (LETTERS.test(digitValue)) {
       console.log(LETTERS.test(digitValue));
@@ -18,50 +23,64 @@ const Line = (props) => {
     clonedValues[index] = digitValue;
     setEnteredCode(clonedValues);
   };
-  const [isContains, setIsContains] = useState(false);
+
   console.log("secret array: " + secretCode);
   console.log("enetered array: " + enteredCode);
-  // let containso = false;
-  // const [dotClassName, setDotClassName] = useState({styles.Dot);
-
+  let trialIsdone = true;
   const checkCodeValidity = () => {
     // let i = 0;
-    const secretString = JSON.stringify(secretCode);
-    for (let i = 0; i < secretCode.length; i++) {
-      const digit = secretCode[i].toString();
-      const digitq = enteredCode[i].toString();
-      // const enteredDigit = enteredCode.index;
-      // console.log("yyy " + enteredCode.index.toString());
-      if (enteredCode.findIndex((val) => val === digit) !== -1) {
-        console.log(
-          " entered contains this vlaue " +
-            digit +
-            " :" +
-            enteredCode.findIndex((val) => val === digit)
-        );
-        setIsContains(true);
-        // console.log(
-        //   " entered contains this vlaue in reverse " +
-        //     digitq +
-        //     " :" +
-        //     secretString.findIndex((val) => val === digitq)
-        // );
+    // let count = 0;
+    // let sameSCounter = 0;
 
-        // if (
-        //   enteredCode.findIndex((val) => val === digit) ===
-        //   secretString.findIndex((val) => val === digitq)
-        // ) {
-        //   console.log(
-        //     "the index: " + enteredCode.findIndex((val) => val === digit)
-        //   );
-        // }
-        // setDotClassName({styles['contains']});
+    for (let i = 0; i < secretCode.length; i++) {
+      const secretDigit = parseInt(enteredCode[i]);
+      const enteredDigit = secretCode[i].toString();
+      var searchInSecretCode = secretCode.findIndex(
+        (val) => val === secretDigit
+      );
+      var searchInEnteredCode = enteredCode.findIndex(
+        (val) => val === enteredDigit
+      );
+      if (
+        searchInSecretCode !== -1 &&
+        searchInEnteredCode === searchInSecretCode
+      ) {
+        circles.fill("true");
+        console.log(
+          "the same spot: " + searchInEnteredCode + " " + searchInSecretCode
+        );
+        // console.log("how many contains: " + containsCounter);
+      } else if (
+        searchInSecretCode !== -1 &&
+        searchInEnteredCode !== searchInSecretCode
+      ) {
+        circles.fill(false);
+        console.log(
+          " secretCode contains " + secretDigit + " at:" + searchInSecretCode
+        );
       } else {
-        console.log("try again ");
+        console.log(" secretCode doesn't contain " + secretDigit + " at:" + i);
       }
     }
-  };
+    console.log("array of circle: ", circles);
+    // console.log("ContainsCounter", count);
+    // setContainsCounter(count);
+    trialIsdone = true;
+    // return (
+    //   <div className={styles.display}>
+    //     {[...Array(containsCounter)].map((index) => {
+    //       <Dot className={classes.contains} />;
+    //     })}
 
+    //     {[...Array(sameSpotCounter)].map((index) => {
+    //       <Dot className={classes.right} />;
+    //     })}
+    //   </div>
+    // );
+  };
+  // console.log("array ", [...Array(containsCounter)]);
+
+  // console.log("ContainsCounterState", containsCounter);
   return (
     <section>
       <div className={styles.display}>
@@ -78,11 +97,19 @@ const Line = (props) => {
           />
         ))}
       </div>
-      <button onClick={checkCodeValidity}> Check </button>
+      <button onClick={checkCodeValidity} disabled={!trialIsdone}>
+        {" "}
+        Check{" "}
+      </button>
+      {/* <div>{circles}</div> */}
       <div className={styles.display}>
-        {dots.map((counts) => {
-          <Dot className={` ${!isContains && styles.contains}`} />;
+        {/* {[...Array(containsCounter)].map((index) => {
+          <Dot className={classes.contains} />;
         })}
+
+        {[...Array(sameSpotCounter)].map((index) => {
+          <Dot className={classes.right} />;
+        })} */}
       </div>
     </section>
   );
