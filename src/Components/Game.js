@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Line from "./Line";
 import styles from "./Game.module.css";
 const SIZE = 4;
 
 const Game = (props) => {
   const [codeValue, setCodeValue] = useState([]);
-  const [trials, setTrials] = useState([]);
+  const [activeStep, setActiveStep] = useState(-1);
+
   const startGameHandler = (codeValue) => {
     console.log("clicked!");
     setCodeValue(
@@ -13,8 +14,9 @@ const Game = (props) => {
         .fill(0)
         .map((num) => (num = Math.floor(Math.random() * 10))))
     );
+    setActiveStep(0);
 
-    console.log("secret code" + " " + codeValue);
+    console.log("secret code ", codeValue);
   };
 
   return (
@@ -23,13 +25,17 @@ const Game = (props) => {
         <h1>Find The Secret Code</h1>
       </div>
       <div className={styles.game_bar}>
-        {/* {trials.map((num) => { */}
-        <Line
-          className={styles.line_display}
-          secretCode={codeValue}
-          // numberOftrial={num}
-        />
-        ;{/* })} */}
+        {Array(8)
+          .fill(0)
+          .map((value, index) => (
+            <Line
+              key={index}
+              className={styles.line_display}
+              secretCode={codeValue}
+              indexOfLine={index}
+              activeStep={activeStep}
+            />
+          ))}
       </div>
       <div className={styles.side_bar}>
         <button

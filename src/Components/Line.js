@@ -1,18 +1,16 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Line.module.css";
-import Dot from "./Dot.js";
-import classes from "./Dot.module.css";
+import DotLine from "./DotLine.js";
+import InputLine from "./InputLine";
 
-// import "./Dot.css";
-const SIZE = 4;
 var LETTERS = /^[A-Za-z]+$/;
 const Line = (props) => {
-  console.log(props); //secret code
   const secretCode = props.secretCode;
+  let activeStep = props.activeStep;
+  const indexOfLine = props.indexOfLine;
+  let trialIsdone = true; //disable button
   const [enteredCode, setEnteredCode] = useState(["", "", "", ""]);
   const [circles, setCircles] = useState([]);
-  // const [containsCounter, setContainsCounter] = useState(0);
-  // const [sameSpotCounter, setSameSpotCounter] = useState();
 
   const valueInputChangeHandler = (digitValue, index) => {
     if (LETTERS.test(digitValue)) {
@@ -23,16 +21,16 @@ const Line = (props) => {
     clonedValues[index] = digitValue;
     setEnteredCode(clonedValues);
   };
+  useEffect(() => {
+    console.log("array of circles ", circles);
+  }, [circles]);
 
   console.log("secret array: " + secretCode);
   console.log("enetered array: " + enteredCode);
-  let trialIsdone = true;
-  const checkCodeValidity = () => {
-    // let i = 0;
-    // let count = 0;
-    // let sameSCounter = 0;
 
-    for (let i = 0; i < secretCode.length; i++) {
+  const checkCodeValidity = () => {
+    let arr = [];
+    for (let i in secretCode) {
       const secretDigit = parseInt(enteredCode[i]);
       const enteredDigit = secretCode[i].toString();
       var searchInSecretCode = secretCode.findIndex(
@@ -45,16 +43,16 @@ const Line = (props) => {
         searchInSecretCode !== -1 &&
         searchInEnteredCode === searchInSecretCode
       ) {
-        circles.fill("true");
+        arr.push(true);
+
         console.log(
           "the same spot: " + searchInEnteredCode + " " + searchInSecretCode
         );
-        // console.log("how many contains: " + containsCounter);
       } else if (
         searchInSecretCode !== -1 &&
         searchInEnteredCode !== searchInSecretCode
       ) {
-        circles.fill(false);
+        arr.push(false);
         console.log(
           " secretCode contains " + secretDigit + " at:" + searchInSecretCode
         );
@@ -62,54 +60,32 @@ const Line = (props) => {
         console.log(" secretCode doesn't contain " + secretDigit + " at:" + i);
       }
     }
-    console.log("array of circle: ", circles);
-    // console.log("ContainsCounter", count);
-    // setContainsCounter(count);
-    trialIsdone = true;
-    // return (
-    //   <div className={styles.display}>
-    //     {[...Array(containsCounter)].map((index) => {
-    //       <Dot className={classes.contains} />;
-    //     })}
 
-    //     {[...Array(sameSpotCounter)].map((index) => {
-    //       <Dot className={classes.right} />;
-    //     })}
-    //   </div>
-    // );
+    arr.sort((value) => {
+      return value ? -1 : 1;
+    });
+    console.log("array: ", arr);
+    setCircles(arr);
+    // activeStep++;
+    if (activeStep === indexOfLine) {
+      trialIsdone = false;
+    }
+    let trialIsdone = true;
   };
-  // console.log("array ", [...Array(containsCounter)]);
-
-  // console.log("ContainsCounterState", containsCounter);
   return (
     <section>
       <div className={styles.display}>
-        {enteredCode.map((digitValue, index) => (
-          <input
-            key={index}
-            type="text"
-            maxLength="1"
-            id={styles.fillers}
-            onChange={(event) => {
-              valueInputChangeHandler(event.target.value, index);
-            }}
-            value={digitValue}
-          />
-        ))}
+        <InputLine
+          enteredCode={enteredCode}
+          valueInputChangeHandler={valueInputChangeHandler}
+        />
       </div>
-      <button onClick={checkCodeValidity} disabled={!trialIsdone}>
-        {" "}
-        Check{" "}
+      <button onClick={checkCodeValidity} disabled={trialIsdone}>
+        Check
       </button>
-      {/* <div>{circles}</div> */}
-      <div className={styles.display}>
-        {/* {[...Array(containsCounter)].map((index) => {
-          <Dot className={classes.contains} />;
-        })}
 
-        {[...Array(sameSpotCounter)].map((index) => {
-          <Dot className={classes.right} />;
-        })} */}
+      <div className={styles.display}>
+        <DotLine circles={circles} />
       </div>
     </section>
   );
