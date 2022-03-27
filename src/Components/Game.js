@@ -3,10 +3,18 @@ import Line from "./Line";
 import styles from "./Game.module.css";
 const SIZE = 4;
 
+
 const Game = (props) => {
   const [codeValue, setCodeValue] = useState([]);
   const [activeStep, setActiveStep] = useState(-1);
-
+  const [trialIsDone, setTrialIsDone] = useState(true);
+  //  let trialIsDone = true;
+  useEffect(() => {
+    console.log("trial: ", trialIsDone);
+  }, [trialIsDone])
+  useEffect(() => {
+    console.log("active step: ", activeStep)
+  }, [activeStep])
   const startGameHandler = (codeValue) => {
     console.log("clicked!");
     setCodeValue(
@@ -14,8 +22,8 @@ const Game = (props) => {
         .fill(0)
         .map((num) => (num = Math.floor(Math.random() * 10))))
     );
-    setActiveStep(0);
-
+    setActiveStep(activeStep => activeStep + 1);
+    setTrialIsDone(false)
     console.log("secret code ", codeValue);
   };
 
@@ -34,6 +42,9 @@ const Game = (props) => {
               secretCode={codeValue}
               indexOfLine={index}
               activeStep={activeStep}
+              setActiveStep={() => setActiveStep}
+              trialIsDone={trialIsDone}
+              setTrialIsDone={() => setTrialIsDone}
             />
           ))}
       </div>
