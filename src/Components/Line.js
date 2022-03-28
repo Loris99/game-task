@@ -5,15 +5,19 @@ import InputLine from "./InputLine";
 
 var LETTERS = /^[A-Za-z]+$/;
 const Line = (props) => {
-  const secretCode = props.secretCode;
-  let activeStep = props.activeStep;
-  let setActiveStep = props.setActiveStep;
-  const indexOfLine = props.indexOfLine;
-  let trialIsDone = props.trialIsDone; //disable button
-  const setTrialIsDone = props.setTrialIsDone;
+  // const indexOfLine = props.indexOfLine;
+  // const [checkButton, setCheckButton] = useState(true);
+
   const [enteredCode, setEnteredCode] = useState(["", "", "", ""]);
   const [circles, setCircles] = useState([]);
 
+  //to restart the game and clear inputs
+  useEffect(() => {
+    setEnteredCode(["", "", "", ""]);
+    setCircles([]);
+  }, [props.clear]);
+
+  //check if input is number & add into the array
   const valueInputChangeHandler = (digitValue, index) => {
     if (LETTERS.test(digitValue)) {
       console.log(LETTERS.test(digitValue));
@@ -23,25 +27,20 @@ const Line = (props) => {
     clonedValues[index] = digitValue;
     setEnteredCode(clonedValues);
   };
+
+  //print array of circles (boolean)
   useEffect(() => {
     console.log("array of circles ", circles);
   }, [circles]);
 
-  // console.log("secret array: " + secretCode);
-  // console.log("enetered array: " + enteredCode);
-
-  useEffect(() => {
-    if (activeStep === indexOfLine) {
-      setTrialIsDone(false)
-    }
-  }, [])
+  //check button
   const checkCodeValidity = () => {
     let arr = [];
-    for (let i in secretCode) {
-      setActiveStep(count => count++);
+    let stepCount = 0;
+    for (let i in props.secretCode) {
       const secretDigit = parseInt(enteredCode[i]);
-      const enteredDigit = secretCode[i].toString();
-      var searchInSecretCode = secretCode.findIndex(
+      const enteredDigit = props.secretCode[i].toString();
+      var searchInSecretCode = props.secretCode.findIndex(
         (val) => val === secretDigit
       );
       var searchInEnteredCode = enteredCode.findIndex(
@@ -52,37 +51,25 @@ const Line = (props) => {
         searchInEnteredCode === searchInSecretCode
       ) {
         arr.push(true);
-
-        // console.log(
-        //   "the same spot: " + searchInEnteredCode + " " + searchInSecretCode
-        // );
       } else if (
         searchInSecretCode !== -1 &&
         searchInEnteredCode !== searchInSecretCode
       ) {
         arr.push(false);
-        // console.log(
-        //   " secretCode contains " + secretDigit + " at:" + searchInSecretCode
-        // );
       } else {
-        console.log(" secretCode doesn't contain " + secretDigit + " at:" + i);
+        console.log(" secretCode doesn't contain the input value");
       }
     }
-
+    //sort boolean array
     arr.sort((value) => {
       return value ? -1 : 1;
     });
-
-    console.log("array: ", arr);
     setCircles(arr);
-    setActiveStep(activeStep => activeStep + 1)
-    //   setTrialIsDone(true);
-    move(activeStep, indexOfLine);
+    console.log("array: ", arr);
+    stepCount = stepCount + 1;
+    props.updateActiveStep(stepCount);
   };
-  const move = (activeStep, indexOfLine) => {
-    if (indexOfLine === activeStep)
-      return setTrialIsDone(true)
-  }
+
   return (
     <section>
       <div className={styles.display}>
@@ -91,7 +78,10 @@ const Line = (props) => {
           valueInputChangeHandler={valueInputChangeHandler}
         />
       </div>
-      <button onClick={checkCodeValidity} disabled={trialIsDone}>
+      <button
+        onClick={checkCodeValidity}
+        disabled={props.activeStep !== props.indexOfLine}
+      >
         Check
       </button>
 

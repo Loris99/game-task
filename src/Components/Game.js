@@ -3,28 +3,35 @@ import Line from "./Line";
 import styles from "./Game.module.css";
 const SIZE = 4;
 
-
 const Game = (props) => {
   const [codeValue, setCodeValue] = useState([]);
   const [activeStep, setActiveStep] = useState(-1);
-  const [trialIsDone, setTrialIsDone] = useState(true);
-  //  let trialIsDone = true;
-  useEffect(() => {
-    console.log("trial: ", trialIsDone);
-  }, [trialIsDone])
-  useEffect(() => {
-    console.log("active step: ", activeStep)
-  }, [activeStep])
+
+  const [clear, setClear] = useState(false);
+
+  const updateActiveStep = (currentActiveStep) => {
+    setActiveStep(currentActiveStep);
+    console.log("updated active Step ", activeStep);
+  };
+
+  // useEffect(() => {
+  //   // setActiveStep(activeStep);
+  //   console.log("active step: ", activeStep);
+  // }, [activeStep]);
+
   const startGameHandler = (codeValue) => {
     console.log("clicked!");
+
     setCodeValue(
       (codeValue = Array(SIZE)
         .fill(0)
-        .map((num) => (num = Math.floor(Math.random() * 10))))
+        .map((num, index) => (num = Math.floor(Math.random() * 10))))
     );
-    setActiveStep(activeStep => activeStep + 1);
-    setTrialIsDone(false)
+    setActiveStep(0);
+
     console.log("secret code ", codeValue);
+
+    setClear(!clear);
   };
 
   return (
@@ -33,7 +40,7 @@ const Game = (props) => {
         <h1>Find The Secret Code</h1>
       </div>
       <div className={styles.game_bar}>
-        {Array(8)
+        {Array(7)
           .fill(0)
           .map((value, index) => (
             <Line
@@ -43,8 +50,8 @@ const Game = (props) => {
               indexOfLine={index}
               activeStep={activeStep}
               setActiveStep={() => setActiveStep}
-              trialIsDone={trialIsDone}
-              setTrialIsDone={() => setTrialIsDone}
+              clear={clear}
+              updateActiveStep={updateActiveStep}
             />
           ))}
       </div>
