@@ -9,48 +9,43 @@
 .top_bar {
   grid-column: 1/-1;
   border-bottom: 3px solid black;
- 
+
   text-decoration: none;
   list-style-type: none;
   text-align: center;
 }
 .top_bar h1 {
- text-overflow: ellipsis;
-white-space: nowrap;
-overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .side_bar {
- 
-display: grid;
-       
-       
-        width: 100%;
-        /* grid-template-columns: repeat(auto-fit, minmax(200px, 300px)); */
+  display: grid;
+  width: 100%;
   border-left: 3px solid black;
 }
 
-.linesContainer{
-   display: grid;
-      
-        overflow: auto;
-       
-        width: 100%;
+.linesContainer {
+  display: grid;
+
+  overflow: auto;
+
+  width: 100%;
 }
 .line_display {
   display: inline-block;
 }
 
-.startButton{
-   align-self: center;
+.startButton {
+  align-self: center;
   justify-self: center;
-  width:70px;
+  width: 70px;
   height: 40px;
   border-radius: 30%;
-  background-color:  rgb(4, 95, 140);
- border-color:  rgb(4, 95, 140);
- text-align: center;
+  background-color: rgb(4, 95, 140);
+  border-color: rgb(4, 95, 140);
+  text-align: center;
   text-decoration: none;
- text-decoration-thickness: 2px;
-   color:black
- 
+  font-size: 18px;
+  color: black;
 }
