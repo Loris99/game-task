@@ -1,8 +1,8 @@
 import classes from "./DotLine.module.css";
-
-const DotLine = (props) => {
-  return props.circles.map((value, index) => (
+import PropTypes from "prop-types";
+const DotLine = (props) =>
+  props.circles.map((value, index) => (
     <span key={index} className={classes[value ? "right" : "contains"]} />
   ));
-};
+
 export default DotLine;
