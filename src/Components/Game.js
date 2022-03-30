@@ -5,7 +5,7 @@ const SIZE = 4;
 
 const Game = (props) => {
   const [codeValue, setCodeValue] = useState([]);
-  const [activeStep, setActiveStep] = useState(-1);
+  const [activeStep, setActiveStep] = useState();
 
   const [clear, setClear] = useState(false);
 
@@ -28,7 +28,7 @@ const Game = (props) => {
         .map((num, index) => (num = Math.floor(Math.random() * 10))))
     );
     setActiveStep(0);
-
+    //updateActiveStep(0)
     console.log("secret code ", codeValue);
 
     setClear(!clear);
@@ -39,8 +39,8 @@ const Game = (props) => {
       <div className={styles.top_bar}>
         <h1>Find The Secret Code</h1>
       </div>
-      <div className={styles.game_bar}>
-        {Array(7)
+      <div className={styles.linesContainer}>
+        {Array(8)
           .fill(0)
           .map((value, index) => (
             <Line
@@ -49,14 +49,14 @@ const Game = (props) => {
               secretCode={codeValue}
               indexOfLine={index}
               activeStep={activeStep}
-              setActiveStep={() => setActiveStep}
+              //setActiveStep ={() => setActiveStep}
               clear={clear}
               updateActiveStep={updateActiveStep}
             />
           ))}
       </div>
       <div className={styles.side_bar}>
-        <button
+        <button className={styles.startButton}
           onClick={() => {
             startGameHandler(codeValue);
           }}

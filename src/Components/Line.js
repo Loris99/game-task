@@ -30,32 +30,66 @@ const Line = (props) => {
 
   //print array of circles (boolean)
   useEffect(() => {
-    console.log("array of circles ", circles);
+    // console.log("array of circles ", circles);
   }, [circles]);
+
 
   //check button
   const checkCodeValidity = () => {
+    let stepCount = props.activeStep;
     let arr = [];
-    let stepCount = 0;
     for (let i in props.secretCode) {
-      const secretDigit = parseInt(enteredCode[i]);
-      const enteredDigit = props.secretCode[i].toString();
+      const enteredDigit = parseInt(enteredCode[i]);
+      const secretDigit = props.secretCode[i].toString();
       var searchInSecretCode = props.secretCode.findIndex(
-        (val) => val === secretDigit
-      );
-      var searchInEnteredCode = enteredCode.findIndex(
         (val) => val === enteredDigit
+      );
+      // var searchInEnteredCode = enteredCode.findIndex(
+      //   (val) => val === secretDigit
+      // );
+      var searching = props.secretCode.findIndex(
+        (val) => val === props.secretCode[i]
       );
       if (
         searchInSecretCode !== -1 &&
-        searchInEnteredCode === searchInSecretCode
+        searching === searchInSecretCode
+        //&&
+        //  enteredDigit === props.secretCode[i]
       ) {
         arr.push(true);
-      } else if (
+        console.log("right place ")
+        console.log("secretDigit ", secretDigit)
+        console.log("enteredDigit ", enteredDigit)
+        console.log("searchInSecretCode: ", searchInSecretCode)
+        console.log("searching: ", searching)
+
+        //  console.log("searchInEnteredCode: ", searchInEnteredCode)
+
+
+      }
+      // else if (searchInSecretCode !== -1 &&
+      //   searchInEnteredCode === searchInSecretCode &&
+      //   enteredDigit !== props.secretCode[i]) {
+      //   arr.push(false);
+      //   console.log("contains place")
+      //   console.log("secretDigit ", secretDigit)
+      //   console.log("enteredDigit ", enteredDigit)
+      //   console.log("searchInSecretCode: ", searchInSecretCode)
+      //   console.log("searchInEnteredCode: ", searchInEnteredCode)
+
+      // }
+      else if (
         searchInSecretCode !== -1 &&
-        searchInEnteredCode !== searchInSecretCode
+        searching !== searchInSecretCode
+
       ) {
         arr.push(false);
+        console.log("contains place")
+        console.log("secretDigit ", secretDigit)
+        console.log("enteredDigit ", enteredDigit)
+        console.log("searchInSecretCode: ", searchInSecretCode)
+        console.log("searching: ", searching)
+        //  console.log("searchInEnteredCode: ", searchInEnteredCode)
       } else {
         console.log(" secretCode doesn't contain the input value");
       }
@@ -66,6 +100,9 @@ const Line = (props) => {
     });
     setCircles(arr);
     console.log("array: ", arr);
+    if (props.activeStep === 7) {
+      alert("You've ran out of trials!, press start to start a new game!")
+    }
     stepCount = stepCount + 1;
     props.updateActiveStep(stepCount);
   };
@@ -78,7 +115,7 @@ const Line = (props) => {
           valueInputChangeHandler={valueInputChangeHandler}
         />
       </div>
-      <button
+      <button id={styles.checkBtn}
         onClick={checkCodeValidity}
         disabled={props.activeStep !== props.indexOfLine}
       >
