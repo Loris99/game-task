@@ -2,7 +2,6 @@
   display: grid;
   height: 700px;
   /* width: 900px; */
-  
   grid-template-columns: 1fr 200px;
   grid-template-rows: 70px 1fr;
   grid-gap: 0px;
@@ -30,7 +29,7 @@
   overflow: auto;
   /* width: 100%; */
   padding: 10px;
-   border-right: 3px solid black;
+  border-right: 3px solid black;
 }
 .lineDisplay {
   display: inline-block;
@@ -48,4 +47,7 @@
   text-decoration: none;
   font-size: 18px;
   color: black;
+}
+.message p {
+  color: rgb(85, 26, 141);
 }

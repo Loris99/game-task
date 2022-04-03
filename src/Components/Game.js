@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import Line from "./Line";
 import styles from "./Game.module.css";
 const SIZE = 4;
@@ -10,30 +9,22 @@ const Game = (props) => {
   const [clear, setClear] = useState(false);
   const [isAWin, setIsAWin] = useState();
   const [message, setMessage] = useState(" ");
-
+  const [isStarted, setIsStarted] = useState(false);
   const updateActiveStep = (currentActiveStep) => {
     setActiveStep(currentActiveStep);
   };
   const updateIsAWin = (isAWin) => {
-    console.log("updated is win ");
     setIsAWin(isAWin);
+    setIsStarted(false);
   };
-  console.log("win status ", isAWin);
 
   useEffect(() => {
     if (isAWin === true) {
       setMessage(result.win);
-
-      console.log("win message ", result.win);
-    } else if (isAWin === false) {
+    } else if (isAWin === false && !isStarted) {
       setMessage(result.lose);
-      console.log("win message ", result.lose);
     }
-    // else {
-    //   setMessage(result.nothing);
-    //   console.log("win message ", result.win);
-    // }
-  }, [isAWin]);
+  }, [isAWin, isStarted]);
 
   const result = {
     win: "Congratulation! You've WON",
@@ -49,15 +40,14 @@ const Game = (props) => {
         tempCodeValue.push(randomNumber);
     }
     setCodeValue(tempCodeValue);
+    setMessage(result.nothing);
     updateActiveStep(0);
+    setIsStarted(true);
+    setIsAWin(false);
+
     setClear(!clear);
   };
 
-  // const updateDisable = () => {
-  //   if (activeStep !== indexOfLine) {
-  //   }
-  //   setDisabled();
-  // };
   console.log("secret code ", codeValue);
 
   return (
@@ -67,7 +57,7 @@ const Game = (props) => {
       </div>
       <div className={styles.linesContainer}>
         {Array(8)
-          .fill(0)
+          .fill()
           .map((value, index) => (
             <Line
               key={index}
@@ -79,6 +69,7 @@ const Game = (props) => {
               isAWin={isAWin}
               updateIsAWin={updateIsAWin}
               updateActiveStep={updateActiveStep}
+              isStarted={isStarted}
             />
           ))}
       </div>
@@ -86,8 +77,8 @@ const Game = (props) => {
         <button className={styles.startButton} onClick={startGameHandler}>
           Start
         </button>
-        <div>
-          <h1>{message}</h1>
+        <div className={styles.message}>
+          <p>{message}</p>
         </div>
       </div>
     </div>
