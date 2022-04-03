@@ -6,14 +6,14 @@ import InputLine from "./InputLine";
 
 const DIGITS = /[0-9]/;
 const Line = (props) => {
-  // const [enteredCode, setEnteredCode] = useState(["", "", "", ""]);
-  const [enteredCode, setEnteredCode] = useState([]);
+  const [enteredCode, setEnteredCode] = useState(["", "", "", ""]);
+  // const [enteredCode, setEnteredCode] = useState([]);
   const [circles, setCircles] = useState([]);
   const [disabled, setDisabled] = useState();
   //to restart the game and clear inputs
   useEffect(() => {
-    // setEnteredCode(["", "", "", ""]);
-    setEnteredCode([]);
+    setEnteredCode(["", "", "", ""]);
+    // setEnteredCode([]);
     setCircles([]);
   }, [props.clear]);
 
@@ -23,11 +23,11 @@ const Line = (props) => {
       console.log(DIGITS.test(digitValue));
       return;
     }
-    // const tempEnteredCode = [...enteredCode];
-    const tempEntered = Array(4).map((num, index) => (num = digitValue));
+    const tempEnteredCode = [...enteredCode];
+    // const tempEntered = Array(4).map((num, index) => (num = digitValue));
 
-    // tempEnteredCode[index] = digitValue;
-    setEnteredCode(tempEntered);
+    tempEnteredCode[index] = digitValue;
+    setEnteredCode(tempEnteredCode);
   };
 
   //check button

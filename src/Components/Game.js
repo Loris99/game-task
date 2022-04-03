@@ -42,25 +42,13 @@ const Game = (props) => {
   };
 
   const startGameHandler = () => {
-    const randomNumber = Math.floor(Math.random() * 10);
-    // const anotherRandom = Math.floor(Math.random() * 10);
-    // const tempCodeValue = new Array(4);
-    // tempCodeValue.forEach((element) => {
-    //   if (tempCodeValue.includes(element)) {
-    //     element = Math.floor(Math.random() * 10);
-    //   }
-    // });
-    const tempCodeValue = Array(SIZE)
-      .fill(0)
-      .map(
-        (num, index) =>
-          // if (tempCodeValue.includes(num)) {
-          (num = randomNumber)
-      );
-    // }
-
+    const tempCodeValue = [];
+    while (tempCodeValue.length < SIZE) {
+      const randomNumber = Math.floor(Math.random() * 10);
+      if (tempCodeValue.indexOf(randomNumber) === -1)
+        tempCodeValue.push(randomNumber);
+    }
     setCodeValue(tempCodeValue);
-    // setActiveStep(0);
     updateActiveStep(0);
     setClear(!clear);
   };
