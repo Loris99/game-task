@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Line from "./Line";
 import styles from "./Game.module.css";
 const SIZE = 4;
-
+const NUM_OF_LINES = 8;
 const Game = (props) => {
   const [codeValue, setCodeValue] = useState([]);
   const [activeStep, setActiveStep] = useState(-1);
@@ -56,7 +56,7 @@ const Game = (props) => {
         <h1>Find The Secret Code</h1>
       </div>
       <div className={styles.linesContainer}>
-        {Array(8)
+        {Array(NUM_OF_LINES)
           .fill()
           .map((value, index) => (
             <Line

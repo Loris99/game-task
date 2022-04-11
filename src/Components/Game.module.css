@@ -1,7 +1,6 @@
 .container {
   display: grid;
   height: 700px;
-  /* width: 900px; */
   grid-template-columns: 1fr 200px;
   grid-template-rows: 70px 1fr;
   grid-gap: 0px;
@@ -27,7 +26,6 @@
 .linesContainer {
   display: grid;
   overflow: auto;
-  /* width: 100%; */
   padding: 10px;
   border-right: 3px solid black;
 }

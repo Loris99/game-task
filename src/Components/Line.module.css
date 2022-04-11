@@ -19,7 +19,7 @@
   font-size: 14px;
   color: black;
   margin: 10px;
-  /* flex-basis: 10%; */
+  
 
 }
 .checkBtn:disabled {
@@ -34,10 +34,8 @@
 }
 
 .dotAlignment {
-  /* display: inline-block; */
-/* flex-basis: 40%; */
-  /* justify-content: space-between; */
+ 
   align-content: flex-start;
   margin-right: 10px;
-  /* margin-top: 10px; */
+
 }

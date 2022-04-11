@@ -5,6 +5,8 @@ import InputLine from "./InputLine";
 
 const DIGITS = /[0-9]+/;
 const SIZE = 4;
+const NUM_OF_LINES = 8;
+
 const intialInputs = Array(SIZE).fill("");
 const Line = (props) => {
   const [enteredCode, setEnteredCode] = useState(intialInputs);
@@ -19,7 +21,6 @@ const Line = (props) => {
   //check if input is number & add into the array
   const valueInputChangeHandler = (digitValue, index) => {
     if (DIGITS.test(digitValue) === false) {
-      console.log(DIGITS.test(digitValue));
       return;
     }
     const tempEnteredCode = [...enteredCode];
@@ -61,9 +62,10 @@ const Line = (props) => {
     });
     setCircles(arr);
 
-    if (arr.every((val) => val !== false) && arr.length === 4) {
+    if (arr.every((val) => val !== false) && arr.length === SIZE) {
       props.updateIsAWin(true);
-    } else if (props.activeStep === 7) {
+    } else if (props.activeStep === NUM_OF_LINES - 1) {
+      console.log("num of lines ", NUM_OF_LINES);
       props.updateIsAWin(false);
     }
 
