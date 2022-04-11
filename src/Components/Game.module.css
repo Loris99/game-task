@@ -1,0 +1,56 @@
+.container {
+  display: grid;
+  height: 700px;
+  grid-template-columns: 1fr 200px;
+  grid-template-rows: 70px 1fr;
+  grid-gap: 0px;
+  border: 3px solid black;
+}
+
+.topBar {
+  grid-column: 1/-1;
+  border-bottom: 3px solid black;
+  text-decoration: none;
+  list-style-type: none;
+  text-align: center;
+}
+
+.topBar h1 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sideBar {
+  display: grid;
+  width: 100%;
+}
+
+.linesContainer {
+  display: grid;
+  overflow: auto;
+  padding: 10px;
+  border-right: 3px solid black;
+}
+
+.lineDisplay {
+  display: inline-block;
+}
+
+.startButton {
+  align-self: center;
+  justify-self: center;
+  width: 70px;
+  height: 40px;
+  border-radius: 30%;
+  background-color: rgb(40 128 251);
+  border-color: rgb(40 128 251);
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+}
+
+.message p {
+  color: rgb(85, 26, 141);
+}

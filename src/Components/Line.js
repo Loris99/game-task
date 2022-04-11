@@ -1,47 +1,101 @@
 import { useEffect, useState } from "react";
-import "./Line.css";
-import Dot from "./Dot.js";
+import styles from "./Line.module.css";
+import DotLine from "./DotLine.js";
+import InputLine from "./InputLine";
+
+const DIGITS = /[0-9]+/;
 const SIZE = 4;
+const NUM_OF_LINES = 8;
+
+const intialInputs = Array(SIZE).fill("");
 const Line = (props) => {
-  const checkCodeValidity = () => {};
-  console.log(props); //secret code
+  const [enteredCode, setEnteredCode] = useState(intialInputs);
+  const [circles, setCircles] = useState([]);
+  //to restart the game and clear inputs
+  useEffect(() => {
+    setEnteredCode(intialInputs);
+    setCircles([]);
+  }, [props.clear]);
 
-  // const [enteredValue, setEnteredValue] = useState([0, 0, 0, 0]);
-  const [enteredValue, setEnteredValue] = useState(["", "", "", ""]);
+  useEffect(() => {});
+  //check if input is number & add into the array
   const valueInputChangeHandler = (digitValue, index) => {
-    const clonedValues = [...enteredValue];
-    clonedValues[index] = digitValue;
+    if (DIGITS.test(digitValue) === false) {
+      return;
+    }
+    const tempEnteredCode = [...enteredCode];
 
-    setEnteredValue(clonedValues);
-    //  setEnteredValue(prev)
+    tempEnteredCode[index] = digitValue;
+    setEnteredCode(tempEnteredCode);
   };
-  console.log("enetered array: " + enteredValue.toString());
+
+  //check button
+  const checkCodeValidity = () => {
+    let stepCount = props.activeStep;
+    let arr = [];
+
+    for (let i in props.secretCode) {
+      const enteredDigit = parseInt(enteredCode[i]);
+
+      //search for entered digit in the secretcode
+      let searchInSecretCode = props.secretCode.findIndex(
+        (val) => val === enteredDigit
+      );
+
+      //search for the digit in the secretcode
+      let searching = props.secretCode.findIndex(
+        (val) => val === props.secretCode[i]
+      );
+
+      if (searchInSecretCode !== -1 && searching === searchInSecretCode) {
+        arr.push(true);
+      } else if (
+        searchInSecretCode !== -1 &&
+        searching !== searchInSecretCode
+      ) {
+        arr.push(false);
+      }
+    }
+    //sort boolean array
+    arr.sort((value) => {
+      return value ? -1 : 1;
+    });
+    setCircles(arr);
+
+    if (arr.every((val) => val !== false) && arr.length === SIZE) {
+      props.updateIsAWin(true);
+    } else if (props.activeStep === NUM_OF_LINES - 1) {
+      console.log("num of lines ", NUM_OF_LINES);
+      props.updateIsAWin(false);
+    }
+
+    stepCount = stepCount + 1;
+    props.updateActiveStep(stepCount);
+    if (props.activeStep !== props.indexOfLine) {
+    }
+  };
 
   return (
-    <section>
-      <div className="box">
-        {enteredValue.map((digitValue, index) => (
-          <input
-            key={index}
-            type="text"
-            maxLength="1"
-            pattern="[0-9]*"
-            // oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-            id="fillers"
-            onChange={(event) => {
-              valueInputChangeHandler(event.target.value, index);
-            }}
-            value={digitValue}
-            // min="00"
-            // max="09"
-          />
-        ))}
+    <section className={styles.boardAlignment}>
+      <div className={styles.display}>
+        <InputLine
+          disabled={props.activeStep !== props.indexOfLine || props.isAWin}
+          enteredCode={enteredCode}
+          valueInputChangeHandler={valueInputChangeHandler}
+        />
       </div>
-      <button onClick={checkCodeValidity}> Check </button>
-      <Dot />
-      <Dot />
-      <Dot />
-      <Dot />
+
+      <button
+        className={styles.checkBtn}
+        onClick={checkCodeValidity}
+        disabled={props.activeStep !== props.indexOfLine || props.isAWin}
+      >
+        Check
+      </button>
+
+      <div className={styles.dotAlignment}>
+        <DotLine circles={circles} />
+      </div>
     </section>
   );
 };
