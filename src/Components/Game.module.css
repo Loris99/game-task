@@ -6,6 +6,7 @@
   grid-gap: 0px;
   border: 3px solid black;
 }
+
 .topBar {
   grid-column: 1/-1;
   border-bottom: 3px solid black;
@@ -13,11 +14,13 @@
   list-style-type: none;
   text-align: center;
 }
+
 .topBar h1 {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
+
 .sideBar {
   display: grid;
   width: 100%;
@@ -29,6 +32,7 @@
   padding: 10px;
   border-right: 3px solid black;
 }
+
 .lineDisplay {
   display: inline-block;
 }
@@ -46,6 +50,7 @@
   font-size: 18px;
   color: black;
 }
+
 .message p {
   color: rgb(85, 26, 141);
 }

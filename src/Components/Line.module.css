@@ -1,13 +1,14 @@
 .display {
   display: inline-block;
 }
+
 .fillers {
   width: 30px;
   height: 30px;
   margin: 10px;
   flex-basis: 40%;
-
 }
+
 .checkBtn {
   width: 60px;
   height: 30px;
@@ -19,9 +20,8 @@
   font-size: 14px;
   color: black;
   margin: 10px;
-  
-
 }
+
 .checkBtn:disabled {
   background-color: rgb(76 180 229 / 32%);
   border-color: rgba(56, 187, 247, 0.548);
@@ -34,8 +34,6 @@
 }
 
 .dotAlignment {
- 
   align-content: flex-start;
   margin-right: 10px;
-
 }
