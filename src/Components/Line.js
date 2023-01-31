@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import React from "react";
+
 import styles from "./Line.module.css";
 import DotLine from "./DotLine.js";
 import InputLine from "./InputLine";

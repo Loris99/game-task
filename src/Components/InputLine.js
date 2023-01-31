@@ -1,4 +1,6 @@
 import styles from "./InputLine.module.css";
+import React from "react";
+
 const InputLine = (props) =>
   props.enteredCode.map((digitValue, index) => (
     <input
